@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferøs Services — Avis Clients</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0e0e0e;
+            font-family: Arial, sans-serif;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            padding: 20px;
+            text-align: center;
+            font-size: 2rem;
+            color: #ff003c;
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
+        }
+        form {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.6), 0 0 30px rgba(255, 0, 60, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+        input, textarea, button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        button {
+            background: #ff003c;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
+        }
+        button:hover {
+            background: #ff3366;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.8);
+        }
+        .avis {
+            width: 90%;
+            max-width: 600px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .avis-item {
+            background: #1e1e1e;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), 0 0 25px rgba(0, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .avis-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+        .nom-gold {
+            color: gold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        @keyframes fadeIn {
+            to {opacity: 1; transform: translateY(0);}
+            from {opacity: 0; transform: translateY(10px);}
+        }
+        footer {
+            margin: 20px;
+            font-size: 0.9rem;
+            color: #888;
+            text-shadow: 0 0 5px rgba(255, 0, 60, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <header>ꜰᴇʀøꜱ ꜱᴇʀᴠɪᴄᴇꜱ — ᴀᴠɪꜱ ᴄʟɪᴇɴᴛꜱ</header>
+
+    <form id="avisForm">
+        <input type="text" id="nom" placeholder="Ton prénom ou pseudo" required>
+        <textarea id="message" rows="3" placeholder="Ton avis..." required></textarea>
+        <input type="number" id="etoiles" min="1" max="5" placeholder="Note (1-5)" required>
+        <button type="submit">Envoyer l'avis</button>
+    </form>
+
+    <div class="avis" id="listeAvis"></div>
+
+    <footer>
+        Merci à tous pour vos avis et votre confiance ! 🚀<br>
+        Ferøs Services — Service rapide & Support 24/7.
+    </footer>
+
+    <script>
+        document.getElementById('avisForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nom = document.getElementById('nom').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const etoiles = parseInt(document.getElementById('etoiles').value);
+
+            if (!nom || !message || etoiles < 1 || etoiles > 5) {
+                alert("Merci de remplir tous les champs correctement.");
+                return;
+            }
+
+            const avisItem = document.createElement('div');
+            avisItem.classList.add('avis-item');
+            avisItem.innerHTML = `<strong class='nom-gold'>${nom}</strong> — ${'⭐'.repeat(etoiles)}<p>${message}</p>`;
+
+            document.getElementById('listeAvis').appendChild(avisItem);
+            document.getElementById('avisForm').reset();
+
+            requestAnimationFrame(() => {
+                avisItem.style.opacity = '1';
+            });
+        });
+    </script>
+</body>
+</html>
